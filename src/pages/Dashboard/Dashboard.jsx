@@ -27,7 +27,7 @@ const Dashboard = () => {
 
 	const handleSubmit = () => {
 		setEmployeesArray((prevArray) => [...prevArray, { id: nanoid(), ...form }]);
-		alert("Employee created"); //Rplace by the modal
+		alert("Employee created"); //Replace by the modal
 	};
 
 	return (
