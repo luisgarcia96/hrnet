@@ -33,6 +33,7 @@ const Dashboard = () => {
 	return (
 		<div className={styles.dashboard}>
 			<h1>HRnet</h1>
+			
 			<Link to="/employees">View Current Employees</Link>
 			<div className={styles.content}>
 				<h2>Create Employee</h2>
