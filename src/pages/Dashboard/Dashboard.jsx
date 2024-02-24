@@ -4,7 +4,6 @@ import { Button, Select, TextField } from "@mui/material";
 import { DatePicker } from "@mui/x-date-pickers";
 import FormControl from "@mui/material/FormControl";
 import { useState } from "react";
-// import Select, { SelectChangeEvent } from "@mui/material/Select";
 
 const Dashboard = () => {
 	const [form, setForm] = useState({
