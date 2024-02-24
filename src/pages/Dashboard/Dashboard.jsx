@@ -1,11 +1,18 @@
+import { useState, useContext } from "react";
+import { AppContext } from "../../contexts/AppContext";
 import { Link } from "react-router-dom";
-import styles from "./Dashboard.module.scss";
-import { Button, Select, TextField } from "@mui/material";
-import { DatePicker } from "@mui/x-date-pickers";
+
 import FormControl from "@mui/material/FormControl";
-import { useState } from "react";
+import { DatePicker } from "@mui/x-date-pickers";
+import { Button, Select, TextField } from "@mui/material";
+
+import { nanoid } from "nanoid";
+import { statesList } from "../../constants/statesList";
+
+import styles from "./Dashboard.module.scss";
 
 const Dashboard = () => {
+	const { setEmployeesArray } = useContext(AppContext);
 	const [form, setForm] = useState({
 		firstName: "",
 		lastName: "",
@@ -14,9 +21,14 @@ const Dashboard = () => {
 		street: "",
 		city: "",
 		state: "AL",
-		zip: "",
-		department: 'Sales',
+		zipCode: "",
+		department: "Sales",
 	});
+
+	const handleSubmit = () => {
+		setEmployeesArray((prevArray) => [...prevArray, { id: nanoid(), ...form }]);
+		alert("Employee created"); //Rplace by the modal
+	};
 
 	return (
 		<div className={styles.dashboard}>
@@ -65,62 +77,17 @@ const Dashboard = () => {
 								});
 							}}
 						>
-							<option value="AL">Alabama</option>
-							<option value="AK">Alaska</option>
-							<option value="AZ">Arizona</option>
-							<option value="AR">Arkansas</option>
-							<option value="CA">California</option>
-							<option value="CO">Colorado</option>
-							<option value="CT">Connecticut</option>
-							<option value="DE">Delaware</option>
-							<option value="FL">Florida</option>
-							<option value="GA">Georgia</option>
-							<option value="HI">Hawaii</option>
-							<option value="ID">Idaho</option>
-							<option value="IL">Illinois</option>
-							<option value="IN">Indiana</option>
-							<option value="IA">Iowa</option>
-							<option value="KS">Kansas</option>
-							<option value="KY">Kentucky</option>
-							<option value="LA">Louisiana</option>
-							<option value="ME">Maine</option>
-							<option value="MD">Maryland</option>
-							<option value="MA">Massachusetts</option>
-							<option value="MI">Michigan</option>
-							<option value="MN">Minnesota</option>
-							<option value="MS">Mississippi</option>
-							<option value="MO">Missouri</option>
-							<option value="MT">Montana</option>
-							<option value="NE">Nebraska</option>
-							<option value="NV">Nevada</option>
-							<option value="NH">New Hampshire</option>
-							<option value="NJ">New Jersey</option>
-							<option value="NM">New Mexico</option>
-							<option value="NY">New York</option>
-							<option value="NC">North Carolina</option>
-							<option value="ND">North Dakota</option>
-							<option value="OH">Ohio</option>
-							<option value="OK">Oklahoma</option>
-							<option value="OR">Oregon</option>
-							<option value="PA">Pennsylvania</option>
-							<option value="RI">Rhode Island</option>
-							<option value="SC">South Carolina</option>
-							<option value="SD">South Dakota</option>
-							<option value="TN">Tennessee</option>
-							<option value="TX">Texas</option>
-							<option value="UT">Utah</option>
-							<option value="VT">Vermont</option>
-							<option value="VA">Virginia</option>
-							<option value="WA">Washington</option>
-							<option value="WV">West Virginia</option>
-							<option value="WI">Wisconsin</option>
-							<option value="WY">Wyoming</option>
+							{statesList.map((state) => (
+								<option key={state.label} value={state.value}>
+									{state.label}
+								</option>
+							))}
 						</Select>
 					</FormControl>
 					<TextField
 						label="Zip Code"
-						value={form.zip}
-						onChange={(e) => setForm({ ...form, zip: e.target.value })}
+						value={form.zipCode}
+						onChange={(e) => setForm({ ...form, zipCode: e.target.value })}
 					/>
 				</div>
 				<FormControl>
@@ -137,7 +104,9 @@ const Dashboard = () => {
 					</Select>
 				</FormControl>
 			</div>
-			<Button variant="contained">Contained</Button>
+			<Button variant="contained" onClick={handleSubmit}>
+				Contained
+			</Button>
 		</div>
 	);
 };

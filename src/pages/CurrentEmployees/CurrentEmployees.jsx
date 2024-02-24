@@ -1,28 +1,19 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { AppContext } from "../../contexts/AppContext";
 import { Link } from "react-router-dom";
-import styles from "./CurrentEmployees.module.scss";
-import PropTypes from "prop-types";
-import { mockedEmployeesArray } from "../../__mocks__/employeesTableData";
+
 import { DataGrid } from "@mui/x-data-grid";
 import { TextField } from "@mui/material";
 
-const columns = [
-	{ field: "firstName", headerName: "First name", width: 130 },
-	{ field: "lastName", headerName: "Last name", width: 130 },
-	{ field: "startDate", headerName: "Start Date", width: 130 },
-	{ field: "department", headerName: "Department", width: 130 },
-	{ field: "dateOfBirth", headerName: "Date of Birth", width: 130 },
-	{ field: "street", headerName: "Street", width: 130 },
-	{ field: "city", headerName: "City", width: 130 },
-	{ field: "state", headerName: "State", width: 130 },
-	{ field: "zipCode", headerName: "Zip Code", width: 130 },
-];
+import PropTypes from "prop-types";
+import { employeesTableHeaders } from "../../constants/employeesTableHeaders";
+
+import styles from "./CurrentEmployees.module.scss";
 
 const CurrentEmployees = () => {
 	const [search, setSearch] = useState("");
-	const [employeesArray, setEmployeesArray] = useState(mockedEmployeesArray);
-	const [filteredEmployees, setFilteredEmployees] =
-		useState(mockedEmployeesArray);
+	const { employeesArray } = useContext(AppContext);
+	const [filteredEmployees, setFilteredEmployees] = useState(employeesArray);
 
 	const handleSearch = (e) => {
 		setSearch(e.target.value);
@@ -41,9 +32,6 @@ const CurrentEmployees = () => {
 		);
 	};
 
-	console.log(search);
-	console.log(filteredEmployees);
-
 	return (
 		<div className={styles.currentEmployees}>
 			<h1>Current Employees</h1>
@@ -60,7 +48,7 @@ const CurrentEmployees = () => {
 				</div>
 				<DataGrid
 					rows={filteredEmployees}
-					columns={columns}
+					columns={employeesTableHeaders}
 					pageSize={5}
 					rowsPerPageOptions={[5]}
 					checkboxSelection
@@ -73,5 +61,5 @@ const CurrentEmployees = () => {
 export default CurrentEmployees;
 
 CurrentEmployees.propTypes = {
-	employeesArray: PropTypes.array.isRequired,
+	employeesArray: PropTypes.array,
 };
