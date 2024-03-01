@@ -8,6 +8,7 @@ import { Button, Select, TextField } from "@mui/material";
 
 import { nanoid } from "nanoid";
 import { statesList } from "../../constants/statesList";
+import Modal from "@luisgarcia96/hrnet_design_system";
 
 import styles from "./Dashboard.module.scss";
 
@@ -30,13 +31,20 @@ const Dashboard = () => {
 		alert("Employee created"); //Replace by the modal
 	};
 
+	const [open, setOpen] = useState(false);
+
 	return (
 		<div className={styles.dashboard}>
 			<h1>HRnet</h1>
-			
 			<Link to="/employees">View Current Employees</Link>
 			<div className={styles.content}>
 				<h2>Create Employee</h2>
+				<Button variant="contained" onClick={() => setOpen(!open)} />
+				<Modal
+					isOpen={open}
+					message={"Employee created"}
+					onClose={() => setOpen(false)}
+				/>
 				<TextField
 					label="First Name"
 					value={form.firstName}
