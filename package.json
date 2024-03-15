@@ -12,7 +12,7 @@
 	"dependencies": {
 		"@emotion/react": "^11.11.3",
 		"@emotion/styled": "^11.11.0",
-		"@luisgarcia96/hrnet_design_system": "^0.0.11",
+		"@luisgarcia96/hrnet_design_system": "^0.0.12",
 		"@mui/material": "^5.15.10",
 		"@mui/x-data-grid": "^6.19.5",
 		"@mui/x-date-pickers": "^6.19.4",
