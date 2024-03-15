@@ -19,8 +19,8 @@ const Dashboard = () => {
 	const [form, setForm] = useState({
 		firstName: "",
 		lastName: "",
-		dateOfBirth: "",
-		startDate: "",
+		dateOfBirth: null,
+		startDate: null,
 		street: "",
 		city: "",
 		state: "AL",
@@ -31,6 +31,17 @@ const Dashboard = () => {
 	const handleSubmit = () => {
 		setEmployeesArray((prevArray) => [...prevArray, { id: nanoid(), ...form }]);
 		setIsModalOpen(true);
+		setForm({
+			firstName: "",
+			lastName: "",
+			dateOfBirth: null,
+			startDate: null,
+			street: "",
+			city: "",
+			state: "AL",
+			zipCode: "",
+			department: "Sales",
+		});
 	};
 
 	return (
@@ -59,11 +70,13 @@ const Dashboard = () => {
 					/>
 					<DatePicker
 						label="Date of Birth"
+						value={form.dateOfBirth}
 						onChange={(date) => setForm({ ...form, dateOfBirth: date })}
 						className={styles.inputField}
 					/>
 					<DatePicker
 						label="Start Date"
+						value={form.startDate}
 						onChange={(date) => setForm({ ...form, startDate: date })}
 						className={styles.inputField}
 					/>
@@ -121,6 +134,7 @@ const Dashboard = () => {
 								<option value="Human Resources">Human Resources</option>
 								<option value="Marketing">Marketing</option>
 								<option value="Sales">Sales</option>
+								<option value="Legal">Legal</option>
 							</Select>
 						</FormControl>
 					</div>
