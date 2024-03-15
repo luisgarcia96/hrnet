@@ -9,11 +9,13 @@ import { Button, Select, TextField } from "@mui/material";
 import { nanoid } from "nanoid";
 import { statesList } from "../../constants/statesList";
 import Modal from "@luisgarcia96/hrnet_design_system";
+import "@luisgarcia96/hrnet_design_system/dist/style.css";
 
 import styles from "./Dashboard.module.scss";
 
 const Dashboard = () => {
 	const { setEmployeesArray } = useContext(AppContext);
+	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [form, setForm] = useState({
 		firstName: "",
 		lastName: "",
@@ -28,10 +30,8 @@ const Dashboard = () => {
 
 	const handleSubmit = () => {
 		setEmployeesArray((prevArray) => [...prevArray, { id: nanoid(), ...form }]);
-		alert("Employee created"); //Replace by the modal
+		setIsModalOpen(true);
 	};
-
-	const [open, setOpen] = useState(false);
 
 	return (
 		<div className={styles.dashboard}>
@@ -39,82 +39,95 @@ const Dashboard = () => {
 			<Link to="/employees">View Current Employees</Link>
 			<div className={styles.content}>
 				<h2>Create Employee</h2>
-				<Button variant="contained" onClick={() => setOpen(!open)} />
 				<Modal
-					isOpen={open}
+					isOpen={isModalOpen}
 					message={"Employee created"}
-					onClose={() => setOpen(false)}
+					onClose={() => setIsModalOpen(false)}
 				/>
-				<TextField
-					label="First Name"
-					value={form.firstName}
-					onChange={(e) => setForm({ ...form, firstName: e.target.value })}
-				/>
-				<TextField
-					label="Last Name"
-					value={form.lastName}
-					onChange={(e) => setForm({ ...form, lastName: e.target.value })}
-				/>
-				<DatePicker
-					label="Date of Birth"
-					onChange={(date) => setForm({ ...form, dateOfBirth: date })}
-				/>
-				<DatePicker
-					label="Start Date"
-					onChange={(date) => setForm({ ...form, startDate: date })}
-				/>
-				<div className={styles.addressForm}>
-					<h3>Address</h3>
+				<div className={styles.personalForm}>
 					<TextField
-						label="Street"
-						value={form.street}
-						onChange={(e) => setForm({ ...form, street: e.target.value })}
+						label="First Name"
+						value={form.firstName}
+						onChange={(e) => setForm({ ...form, firstName: e.target.value })}
+						className={styles.inputField}
 					/>
 					<TextField
-						label="City"
-						value={form.city}
-						onChange={(e) => setForm({ ...form, city: e.target.value })}
+						label="Last Name"
+						value={form.lastName}
+						onChange={(e) => setForm({ ...form, lastName: e.target.value })}
+						className={styles.inputField}
 					/>
-					<FormControl>
-						<Select
-							native
-							value={form.state}
-							onChange={(event) => {
-								setForm({
-									...form,
-									state: event.target.value,
-								});
-							}}
-						>
-							{statesList.map((state) => (
-								<option key={state.label} value={state.value}>
-									{state.label}
-								</option>
-							))}
-						</Select>
-					</FormControl>
-					<TextField
-						label="Zip Code"
-						value={form.zipCode}
-						onChange={(e) => setForm({ ...form, zipCode: e.target.value })}
+					<DatePicker
+						label="Date of Birth"
+						onChange={(date) => setForm({ ...form, dateOfBirth: date })}
+						className={styles.inputField}
+					/>
+					<DatePicker
+						label="Start Date"
+						onChange={(date) => setForm({ ...form, startDate: date })}
+						className={styles.inputField}
 					/>
 				</div>
-				<FormControl>
-					<Select
-						native
-						label="Department"
-						value={form.department}
-						onChange={(e) => setForm({ ...form, department: e.target.value })}
-					>
-						<option value="Engineering">Engineering</option>
-						<option value="Human Resources">Human Resources</option>
-						<option value="Marketing">Marketing</option>
-						<option value="Sales">Sales</option>
-					</Select>
-				</FormControl>
+				<div className={styles.addressForm}>
+					<h3>Address</h3>
+					<div className={styles.addressFields}>
+						<TextField
+							label="Street"
+							value={form.street}
+							onChange={(e) => setForm({ ...form, street: e.target.value })}
+							className={styles.inputField}
+						/>
+						<TextField
+							label="City"
+							value={form.city}
+							onChange={(e) => setForm({ ...form, city: e.target.value })}
+							className={styles.inputField}
+						/>
+						<FormControl className={styles.inputField}>
+							<Select
+								native
+								value={form.state}
+								onChange={(event) => {
+									setForm({
+										...form,
+										state: event.target.value,
+									});
+								}}
+							>
+								{statesList.map((state) => (
+									<option key={state.label} value={state.value}>
+										{state.label}
+									</option>
+								))}
+							</Select>
+						</FormControl>
+						<TextField
+							label="Zip Code"
+							value={form.zipCode}
+							onChange={(e) => setForm({ ...form, zipCode: e.target.value })}
+							className={styles.inputField}
+						/>
+
+						<FormControl className={styles.inputField}>
+							<Select
+								native
+								label="Department"
+								value={form.department}
+								onChange={(e) =>
+									setForm({ ...form, department: e.target.value })
+								}
+							>
+								<option value="Engineering">Engineering</option>
+								<option value="Human Resources">Human Resources</option>
+								<option value="Marketing">Marketing</option>
+								<option value="Sales">Sales</option>
+							</Select>
+						</FormControl>
+					</div>
+				</div>
 			</div>
 			<Button variant="contained" onClick={handleSubmit}>
-				Contained
+				Add Employee
 			</Button>
 		</div>
 	);
